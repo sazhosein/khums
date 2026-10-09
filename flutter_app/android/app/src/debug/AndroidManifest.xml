@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- در حالت debug، اپ با پسوند .debug نصب می‌شود -->
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

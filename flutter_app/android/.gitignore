@@ -1,0 +1,9 @@
+/.gradle
+/captures/
+/local.properties
+GeneratedPluginRegistrant.java
+
+# کلیدهای امضا (هرگز کامیت نشوند)
+key.properties
+**/*.keystore
+**/*.jks

@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- این فایل اجازه می‌دهد اپ در حالت profile نیز اجرا شود -->
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

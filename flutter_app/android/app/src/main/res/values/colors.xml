@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- سبز زمردی — رنگ اصلی خمس‌یار -->
+    <color name="emerald">#046A38</color>
+    <color name="emerald_dark">#024D28</color>
+    <color name="gold">#C9A227</color>
+    <color name="ivory">#FBF9F4</color>
+    <color name="ic_launcher_background">#046A38</color>
+</resources>

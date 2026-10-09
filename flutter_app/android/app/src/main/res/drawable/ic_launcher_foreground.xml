@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- پیش‌زمینه آیکون: گنبد + هلال اسلامی (طبق طراحی بصری خمس‌یار) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- گنبد -->
+    <path
+        android:fillColor="#C9A227"
+        android:pathData="M34,66 Q34,36 54,34 Q74,36 74,66 Z" />
+
+    <!-- پایه گنبد -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,66 L78,66 L78,74 L30,74 Z" />
+
+    <!-- هلال -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,24 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z" />
+    <path
+        android:fillColor="#046A38"
+        android:pathData="M57.5,23 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z" />
+</vector>
