@@ -47,9 +47,11 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     final rules = marja?.rules;
 
     // بررسی شرط اجازه برای سهم امام
-    final needsPermission = _target != 'sayyid' &&
-        (rules?.imamShareRequiresPermission ?? true) &&
-        !(rules?.sayyidShareDirectPayment ?? false && _target == 'sayyid');
+    // اگر پرداخت شامل سهم امام باشد (سهم امام یا هر دو سهم) و مرجع اجازه را
+    // الزامی بداند، تأیید از کاربر گرفته می‌شود.
+    final imamShareRequested = _target == 'imam' || _target == 'full';
+    final needsPermission =
+        imamShareRequested && (rules?.imamShareRequiresPermission ?? true);
 
     if (needsPermission) {
       final proceed = await showDialog<bool>(
