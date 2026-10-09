@@ -1,0 +1,114 @@
+name: Build APK
+
+# ساخت خودکار فایل APK اندروید و انتشار آن در Releases و Artifacts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'flutter_app/**'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'برچسب نسخه برای انتشار (مثلاً v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ساخت APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: دریافت کد
+        uses: actions/checkout@v4
+
+      - name: نصب Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: نصب Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.24.5'
+          cache: true
+
+      - name: ساخت پلتفرم‌های نبوده (android)
+        working-directory: flutter_app
+        run: |
+          # اگر پوشه android موجود باشد، flutter create چیزی را بازنویسی نمی‌کند
+          flutter create --platforms=android --org app.khumsyar --project-name khums_yar .
+
+      - name: دریافت وابستگی‌ها
+        working-directory: flutter_app
+        run: flutter pub get
+
+      - name: تحلیل کد
+        working-directory: flutter_app
+        run: flutter analyze --no-fatal-infos || true
+
+      - name: اجرای تست‌های واحد
+        working-directory: flutter_app
+        run: flutter test || true
+
+      - name: ساخت APK (release)
+        working-directory: flutter_app
+        run: flutter build apk --release --split-per-abi
+
+      - name: ساخت APK (universal)
+        working-directory: flutter_app
+        run: flutter build apk --release
+
+      - name: تغییر نام فایل‌ها
+        working-directory: flutter_app
+        run: |
+          mkdir -p ../apk-out
+          cp build/app/outputs/flutter-apk/app-release.apk ../apk-out/khumsyar-universal.apk
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ../apk-out/khumsyar-arm32.apk 2>/dev/null || true
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../apk-out/khumsyar-arm64.apk 2>/dev/null || true
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk ../apk-out/khumsyar-x86_64.apk 2>/dev/null || true
+          ls -lh ../apk-out
+
+      - name: بارگذاری به‌عنوان Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: khumsyar-apk
+          path: apk-out/*.apk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: انتشار در Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.release_tag || 'v1.0.0' }}
+          name: 'خمس‌یار ${{ github.event.inputs.release_tag || ''v1.0.0'' }}'
+          body: |
+            ## خمس‌یار — اپلیکیشن محاسبه خمس اسلامی
+
+            نسخه خودکار ساخته‌شده از آخرین تغییرات شاخه `main`.
+
+            ### فایل‌های APK
+            | فایل | معماری | کاربرد |
+            |------|--------|--------|
+            | `khumsyar-universal.apk` | همه | نصب روی هر دستگاه (پیشنهادی) |
+            | `khumsyar-arm64.apk` | arm64-v8a | اکثر گوشی‌های مدرن |
+            | `khumsyar-arm32.apk` | armeabi-v7a | گوشی‌های قدیمی‌تر |
+            | `khumsyar-x86_64.apk` | x86_64 | شبیه‌سازها |
+
+            ### ⚠️ سلب مسئولیت شرعی
+            این اپلیکیشن فقط ابزار محاسبه است و صادرکننده حکم شرعی نیست.
+            نتیجه محاسبه جنبه کمک‌آموزشی دارد. برای اطمینان، با دفتر مرجع خود
+            مشورت کنید.
+
+            > این APK با کلید debug امضا شده است و برای تست/توزیع غیررسمی مناسب
+            > است. برای انتشار در Google Play، امضای release لازم است.
+          files: apk-out/*.apk
+          draft: false
+          prerelease: false
