@@ -1,0 +1,31 @@
+# ── Flutter / Dart ──
+flutter_app/.dart_tool/
+flutter_app/.packages
+flutter_app/build/
+flutter_app/.flutter-plugins
+flutter_app/.flutter-plugins-dependencies
+flutter_app/pubspec.lock
+flutter_app/**/generated_plugin_registrant.dart
+**/*.g.dart
+**/*.freezed.dart
+
+# ── Node.js ──
+backend/node_modules/
+backend/npm-debug.log*
+backend/yarn-error.log*
+backend/.env
+backend/.env.local
+backend/coverage/
+
+# ── Editors / OS ──
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ── Secrets ──
+*.pem
+*.key
+*.jks
+*.keystore

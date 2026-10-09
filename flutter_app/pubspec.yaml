@@ -1,0 +1,77 @@
+name: khums_yar
+description: "خمس‌یار - اپلیکیشن محاسبه خمس اسلامی بر اساس نظر مرجع تقلید"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Localization & RTL
+  intl: ^0.19.0
+
+  # Networking
+  dio: ^5.4.3
+  connectivity_plus: ^6.0.3
+
+  # Storage (secure & encrypted)
+  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.2.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Notifications (سال خمسی reminders + home widget)
+  flutter_local_notifications: ^17.1.2
+  timezone: ^0.9.3
+  home_widget: ^0.6.0
+
+  # Persian typography & fonts
+  google_fonts: ^6.2.1
+
+  # UI extras
+  fl_chart: ^0.68.0
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0
+  lottie: ^3.1.2
+
+  # Utilities
+  url_launcher: ^6.2.6
+  package_info_plus: ^8.0.0
+  device_info_plus: ^10.1.0
+  webview_flutter: ^4.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.9
+  riverpod_generator: ^2.4.0
+  hive_generator: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/
+    - assets/data/rules/
+
+  fonts:
+    - family: Vazirmatn
+      fonts:
+        - asset: assets/fonts/Vazirmatn-Regular.ttf
+        - asset: assets/fonts/Vazirmatn-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Vazirmatn-Bold.ttf
+          weight: 700
